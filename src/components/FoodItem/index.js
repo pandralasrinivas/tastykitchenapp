@@ -17,22 +17,11 @@ class FoodItem extends Component {
     this.findTheCartItemInList()
   }
 
-  /* getTheLocalStorageData = () => {
-    const cartList = JSON.parse(localStorage.getItem('cart_list')) || []
-    // console.log(cartList)
-    this.setState({cartList})
-  } */
-
-  /* Add to cart when click on add button. this will
-  store in local storage */
-
   findTheCartItemInList = () => {
     const cartData = JSON.parse(localStorage.getItem('cartData')) || []
     const {foodItem} = this.props
     const cartItem = cartData.filter(each => each.id === foodItem.id)
-    // console.log(cartItem)
     if (cartItem.length !== 0) {
-      // console.log(cartItem)
       if (cartItem[0].quantity > 0) {
         this.setState({quantity: cartItem[0].quantity, isFound: true})
       } else if (cartItem[0].quantity < 1) {
@@ -47,7 +36,6 @@ class FoodItem extends Component {
     const {foodItem} = this.props
     const updatedCartData = cartData.map(eachItem => {
       if (eachItem.id === foodItem.id) {
-        // console.log('found')
         const updatedQuantity = eachItem.quantity + 1
         return {...eachItem, quantity: updatedQuantity}
       }
@@ -62,7 +50,6 @@ class FoodItem extends Component {
     const {foodItem} = this.props
     const updatedCartData = cartData.map(eachItem => {
       if (eachItem.id === foodItem.id) {
-        // console.log('found')
         if (eachItem.quantity > 0) {
           const updatedQuantity = eachItem.quantity - 1
           return {...eachItem, quantity: updatedQuantity}
@@ -87,9 +74,7 @@ class FoodItem extends Component {
   addCartItem = () => {
     const cartData = JSON.parse(localStorage.getItem('cartData')) || []
     const {foodItem} = this.props
-    // console.log(foodItem)
     const cartItem = {...foodItem, quantity: 1}
-    // console.log(cartItem)
     cartData.push(cartItem)
     localStorage.setItem('cartData', JSON.stringify(cartData))
     this.findTheCartItemInList()
@@ -101,7 +86,7 @@ class FoodItem extends Component {
     const {isFound, quantity} = this.state
     console.log(quantity)
     return (
-      <li className={itemClass.ListItem} testid="foodItem">
+      <li className={itemClass.ListItem} data-testid="foodItem">
         <img
           src={foodItem.imageUrl}
           alt="food-item"
@@ -122,23 +107,26 @@ class FoodItem extends Component {
               <button
                 type="button"
                 className="minus-icon-container"
-                testid="decrement-count"
+                data-testid="decrement-count"
                 onClick={this.decrementCartItemQuantity}
+                aria-label="decrement quantity"
               >
                 <HiOutlineMinusSm className="minus-icon" />
               </button>
               <button
                 type="button"
                 className="count-value"
-                testid="active-count"
+                data-testid="active-count"
+                aria-label={`current quantity is ${quantity}`}
               >
                 {quantity}
               </button>
               <button
                 type="button"
                 className="plus-icon-container"
-                testid="increment-count"
+                data-testid="increment-count"
                 onClick={this.incrementCartItemQuantity}
+                aria-label="increment quantity"
               >
                 <BsPlus className="plus-icon" />
               </button>
@@ -148,6 +136,7 @@ class FoodItem extends Component {
               type="button"
               className={itemClass.AddButton}
               onClick={this.addCartItem}
+              aria-label="add to cart"
             >
               Add
             </button>

@@ -22,13 +22,10 @@ class RestaurantDetailsRoute extends Component {
     loadfooter: false,
   }
 
-  // component did mount method
   componentDidMount() {
     this.getRestaurantData()
     window.scrollTo(0, 0)
   }
-
-  // convert snake case to camel case
 
   convertItemsData = foodArray => {
     const item = {
@@ -62,8 +59,6 @@ class RestaurantDetailsRoute extends Component {
     return converted
   }
 
-  // get restaurant details
-
   getRestaurantData = async () => {
     this.setState({apiStatus: restaurantsApiStatusConstants.inProgress})
     const {match} = this.props
@@ -78,9 +73,7 @@ class RestaurantDetailsRoute extends Component {
       },
     }
     const response = await fetch(apiUrl, options)
-    // console.log(response)
     const data = await response.json()
-    // console.log(data)
     if (response.ok === true) {
       const convertedData = this.convertData(data)
       this.setState({
@@ -91,15 +84,14 @@ class RestaurantDetailsRoute extends Component {
     }
   }
 
-  // restaurant loader
-
   restaurantsDisplayLoading = () => (
-    <div className={restaurantClass.Loader} testid="restaurant-details-loader">
+    <div
+      className={restaurantClass.Loader}
+      data-testid="restaurant-details-loader"
+    >
       <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
     </div>
   )
-
-  // restaurants view
 
   restaurantView = () => {
     const {restaurantData} = this.state
@@ -114,10 +106,6 @@ class RestaurantDetailsRoute extends Component {
       rating,
       reviewsCount,
     } = restaurantData
-    // console.log(reviewsCount)
-    // console.log(costForTwo)
-
-    // console.log(foodItems)
     return (
       <div className={restaurantClass.MainContainer}>
         <div className={restaurantClass.RestaurantContainer} key={restaurantId}>
@@ -158,13 +146,9 @@ class RestaurantDetailsRoute extends Component {
     )
   }
 
-  // food items view
-
   foodItemsView = () => {
     const {restaurantData} = this.state
     const {foodItems} = restaurantData
-
-    // console.log(foodItems)
     return (
       <ul className={restaurantClass.FoodItemsContainer}>
         {foodItems.map(eachItem => (
@@ -174,7 +158,6 @@ class RestaurantDetailsRoute extends Component {
     )
   }
 
-  // on render restaurants details
   onRenderDisplayRestaurantDetails = () => {
     const {apiStatus} = this.state
 
@@ -191,9 +174,6 @@ class RestaurantDetailsRoute extends Component {
   }
 
   render() {
-    /* const {match} = this.props
-    const {params} = match
-    const {id} = params */
     const {loadfooter} = this.state
     return (
       <>

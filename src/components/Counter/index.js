@@ -4,7 +4,6 @@ import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
 import './index.css'
 
 // variables for pages
-
 const totalPages = 4
 const Page = 1
 
@@ -12,7 +11,6 @@ class Counter extends Component {
   state = {currentPage: Page}
 
   // onclick event increment function for change the pages
-
   onIncrement = () => {
     const {pageChangeFunction} = this.props
     const {currentPage} = this.state
@@ -25,7 +23,6 @@ class Counter extends Component {
   }
 
   // onclick event decrement function for change the pages
-
   onDecrement = () => {
     const {pageChangeFunction} = this.props
     const {currentPage} = this.state
@@ -45,18 +42,21 @@ class Counter extends Component {
           type="button"
           onClick={this.onDecrement}
           className="btn"
-          testid="pagination-left-button"
+          data-testid="pagination-left-button"
+          aria-label="decrement page"
         >
           <IoIosArrowBack className="icon-class" />
         </button>
         <div className="pages-class">
-          <span testid="active-page-number">{currentPage}</span> of {totalPages}
+          <span data-testid="active-page-number">{currentPage}</span> of{' '}
+          {totalPages}
         </div>
         <button
           type="button"
           onClick={this.onIncrement}
           className="btn"
-          testid="pagination-right-button"
+          data-testid="pagination-right-button"
+          aria-label="increment page"
         >
           <IoIosArrowForward className="icon-class" />
         </button>
